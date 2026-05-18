@@ -1,5 +1,5 @@
 # Используем официальный образ Python
-FROM python:3.11-slim
+FROM python:3.11
 
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Устанавливаем системные зависимости для работы с Postgres
-RUN apt-get update && apt-get install -y libpq-dev gcc && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y libpq-dev gcc && rm -rf /var/lib/apt/lists/*
 
 # Копируем файл зависимостей
 COPY requirements.txt .
