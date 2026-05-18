@@ -1,0 +1,24 @@
+name: Django Habit Tracker Workflow
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd /home/${{ secrets.SSH_USER }}/Course_DRF || git clone https://github.com/${{ github.repository }} /home/${{ secrets.SSH_USER }}/Course_DRF
+          cd /home/${{ secrets.SSH_USER }}/Course_DRF
+          git pull origin develop
+          docker compose up -d --build

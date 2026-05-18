@@ -13,4 +13,4 @@ env/
 __pycache__/
 *.pyc
 
-.idea/git rm -r --cached .idea
+.idea/
