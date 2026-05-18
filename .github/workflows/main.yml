@@ -34,7 +34,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Lint with flake8
-      run: flake8 . --exclude=migrations,venv
+      run: flake8 .
 
     - name: Run tests
       env:
