@@ -1,11 +1,12 @@
 from rest_framework.exceptions import ValidationError
 
+
 class HabitValidator:
     def __call__(self, attrs):
-        associated_habit = attrs.get('associated_habit')
-        reward = attrs.get('reward')
-        is_pleasant = attrs.get('is_pleasant', False)
-        periodicity = attrs.get('periodicity')
+        associated_habit = attrs.get("associated_habit")
+        reward = attrs.get("reward")
+        is_pleasant = attrs.get("is_pleasant", False)
+        periodicity = attrs.get("periodicity")
 
         # 1. Исключить одновременный выбор связанной привычки и вознаграждения
         if associated_habit and reward:

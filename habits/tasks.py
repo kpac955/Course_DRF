@@ -1,6 +1,7 @@
 import requests
 from celery import shared_task
 from django.conf import settings
+
 from habits.models import Habit
 
 
@@ -20,10 +21,7 @@ def send_telegram_notification(habit_id):
         )
 
         url = f"https://api.telegram.org/bot{token}/sendMessage"
-        response = requests.post(url, data={
-            "chat_id": chat_id,
-            "text": message
-        })
+        response = requests.post(url, data={"chat_id": chat_id, "text": message})
 
         return response.json()
     except Habit.DoesNotExist:

@@ -18,13 +18,42 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Habit",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-                ("place", models.CharField(max_length=255, verbose_name="Место выполнения")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "place",
+                    models.CharField(max_length=255, verbose_name="Место выполнения"),
+                ),
                 ("time", models.TimeField(verbose_name="Время выполнения")),
                 ("action", models.CharField(max_length=255, verbose_name="Действие")),
-                ("is_pleasant", models.BooleanField(default=False, verbose_name="Признак приятной привычки")),
-                ("periodicity", models.PositiveSmallIntegerField(default=1, verbose_name="Периодичность (в днях)")),
-                ("reward", models.CharField(blank=True, max_length=255, null=True, verbose_name="Вознаграждение")),
+                (
+                    "is_pleasant",
+                    models.BooleanField(
+                        default=False, verbose_name="Признак приятной привычки"
+                    ),
+                ),
+                (
+                    "periodicity",
+                    models.PositiveSmallIntegerField(
+                        default=1, verbose_name="Периодичность (в днях)"
+                    ),
+                ),
+                (
+                    "reward",
+                    models.CharField(
+                        blank=True,
+                        max_length=255,
+                        null=True,
+                        verbose_name="Вознаграждение",
+                    ),
+                ),
                 (
                     "duration",
                     models.PositiveSmallIntegerField(
@@ -33,7 +62,12 @@ class Migration(migrations.Migration):
                         verbose_name="Время на выполнение (в секундах)",
                     ),
                 ),
-                ("is_public", models.BooleanField(default=False, verbose_name="Признак публичности")),
+                (
+                    "is_public",
+                    models.BooleanField(
+                        default=False, verbose_name="Признак публичности"
+                    ),
+                ),
                 (
                     "associated_habit",
                     models.ForeignKey(
