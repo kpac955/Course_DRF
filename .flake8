@@ -9,4 +9,4 @@ exclude =
     env,
     .env
 
-ignore = W292, E302, F401б E501
+ignore = W292, E302, F401 E501
