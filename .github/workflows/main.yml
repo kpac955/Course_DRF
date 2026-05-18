@@ -2,7 +2,7 @@ name: Django Habit Tracker Workflow
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ home_work ]
 
 jobs:
   deploy:
