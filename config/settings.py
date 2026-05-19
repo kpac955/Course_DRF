@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,12 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-mlqdhodw+2ali@=82zs29cl_*6ia@x_rtu9=o8#41$treecam2"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 # Application definition
 
@@ -47,7 +48,6 @@ INSTALLED_APPS = [
     "habits",
     "corsheaders",
     "drf_spectacular",
-
 ]
 
 MIDDLEWARE = [
@@ -123,28 +123,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Habit Tracker API',
-    'DESCRIPTION': 'Сервис для отслеживания полезных привычек',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+    "TITLE": "Habit Tracker API",
+    "DESCRIPTION": "Сервис для отслеживания полезных привычек",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
-# Настройки Telegram
-TELEGRAM_BOT_TOKEN = "8644872600:AAF-Who_2KMwwt2BHi68e7OfqP37BSTEzbg"
-TELEGRAM_CHAT_ID = "5115001834"
 
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+# Настройки Celery (на случай локального запуска)
+CELERY_BROKER_HOST = os.getenv("CELERY_BROKER_HOST", "127.0.0.1")
+CELERY_BROKER_PORT = os.getenv("CELERY_BROKER_PORT", "6379")
+
+CELERY_BROKER_URL = f"redis://{CELERY_BROKER_HOST}:{CELERY_BROKER_PORT}/0"
+CELERY_RESULT_BACKEND = f"redis://{CELERY_BROKER_HOST}:{CELERY_BROKER_PORT}/0"
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
