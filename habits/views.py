@@ -1,18 +1,24 @@
 from rest_framework import generics, viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 from habits.models import Habit
-from habits.serializers import HabitSerializer, HabitPagination, UserRegisterSerializer
+from habits.paginators import HabitPagination
 from habits.permissions import IsOwnerOrReadOnly
+from habits.serializers import HabitSerializer, UserRegisterSerializer
+
 
 class UserRegisterView(generics.CreateAPIView):
     """Эндпоинт для регистрации нового пользователя"""
+
     serializer_class = UserRegisterSerializer
     permission_classes = [AllowAny]
+
 
 class HabitViewSet(viewsets.ModelViewSet):
     """
     Эндпоинты для работы с привычками текущего пользователя (CRUD).
     """
+
     serializer_class = HabitSerializer
     pagination_class = HabitPagination
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
@@ -30,6 +36,7 @@ class PublicHabitListView(generics.ListAPIView):
     """
     Эндпоинт для просмотра списка публичных привычек.
     """
+
     queryset = Habit.objects.filter(is_public=True)
     serializer_class = HabitSerializer
     pagination_class = HabitPagination
